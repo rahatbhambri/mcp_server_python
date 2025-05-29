@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+mcp_sv/__init__.py
+mcp_sv/__main__.py
+mcp_sv.egg-info/PKG-INFO
+mcp_sv.egg-info/SOURCES.txt
+mcp_sv.egg-info/dependency_links.txt
+mcp_sv.egg-info/requires.txt
+mcp_sv.egg-info/top_level.txt
