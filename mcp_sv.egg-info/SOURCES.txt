@@ -1,7 +1,6 @@
 README.md
+main.py
 pyproject.toml
-mcp_sv/__init__.py
-mcp_sv/__main__.py
 mcp_sv.egg-info/PKG-INFO
 mcp_sv.egg-info/SOURCES.txt
 mcp_sv.egg-info/dependency_links.txt
