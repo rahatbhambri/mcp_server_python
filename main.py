@@ -43,11 +43,25 @@ print('...', file=sys.stderr)
 # Create an MCP server
 logger.info("Initializing MCP server...")
 try:
-    mcp = FastMCP("Demo")
+    mcp = FastMCP(
+        "Demo",
+        # Disable auto-restart features
+        auto_restart=False
+    )
     logger.info("MCP server initialized successfully")
+    
+    # Add signal handlers for graceful shutdown
+    import signal
+    def handle_shutdown(signum, frame):
+        logger.info("Shutting down MCP server...")
+        sys.exit(0)
+        
+    signal.signal(signal.SIGINT, handle_shutdown)
+    signal.signal(signal.SIGTERM, handle_shutdown)
+    
 except Exception as e:
     logger.error(f"Failed to initialize MCP: {e}", exc_info=True)
-    raise
+    sys.exit(1)
 
 @mcp.tool()
 def get_customer_by_name(name: str) -> List[Dict[str, Any]]:
@@ -110,4 +124,19 @@ def calculate_magic_amount(amounts: List[int]) -> int:
         
     Returns:
         The magic number calculated from the list of amounts"""   
-    return reduce(lambda x, y: x * y, amounts)    
+    return reduce(lambda x, y: x * y, amounts)
+
+# Main entry point for running the server
+if __name__ == "__main__":
+    try:
+        logger.info("Starting MCP server...")
+        # The MCP server is already running in the background
+        # Just keep the process alive
+        while True:
+            import time
+            time.sleep(1)
+    except KeyboardInterrupt:
+        logger.info("Shutting down MCP server...")
+    except Exception as e:
+        logger.error(f"Error running MCP server: {e}", exc_info=True)
+        sys.exit(1)
